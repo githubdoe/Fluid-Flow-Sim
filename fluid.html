@@ -52,6 +52,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 	<button class="button" onclick="setupScene(3)">Hires Tunnel</button>
 	<button class="button" onclick="setupScene(0)">Tank</button>
 	<button class="button" onclick="setupScene(2)">Paint</button>
+	<button class="button" onclick="saveRect()">Save Obstructions</button>
+	<button class="button" onclick="getRect()">load Obstructions</button>
+
+
 	<input type = "checkbox" id = "streamButton" onclick = "scene.showStreamlines = !scene.showStreamlines">Streamlines
 	<input type = "checkbox" id = "velocityButton" onclick = "scene.showVelocities = !scene.showVelocities">Velocities
 	<input type = "checkbox" name = "field" id = "pressureButton" onclick = "scene.showPressure = !scene.showPressure;"> Pressure
@@ -852,7 +856,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 	
 	setupScene(1);
 	update();
-	
+
+	function saveRect(){
+
+		var obs = JSON.stringify(scene.blocks);
+		localStorage.obstructions = obs
+		
+	}
+	function getRect(){
+		console.log('obstructions', localStorage.obstructions)
+		let o = JSON.parse(localStorage.obstructions)
+		scene.blocks = []
+		for(let i = 0; i  < o.length; ++i){
+			scene.blocks.push(new rect(o[i].x,o[i].y,o[i].w,o[i].h))
+		}
+
+	}
+
 </script> 
 </body>
 </html>
